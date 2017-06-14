@@ -42,7 +42,7 @@ def decompile():
         return
 
     #Decompile the apk file.
-    os.system("java -jar " + args.apktool + " d " + args.apk_location + " -o " + os.path.join(args.output, "out"))
+    #os.system("java -jar " + args.apktool + " d " + args.apk_location + " -o " + os.path.join(args.output, "out"))
     #Dynamicly test the apk and get all the screenshoots of the activities in the app.
     #for each activity find the locatioin where it is an icon in the assets. trigger the location and get runtime logs.
     ##dytest(args.apk_loction)
@@ -51,13 +51,16 @@ def decompile():
         for name in files:
             if os.path.exists(os.path.join(args.output, "out")):
                 shutil.rmtree(os.path.join(args.output, "out"))
+                #os.system("rm -rf out")
             print "Extracting　"  + os.path.join(root, name)
             print count
             count=count+1
+            if count < 3911:
+                continue
             # status = os.system(
             #     "java -jar " + args.apktool + " d " + os.path.join(args.apk_location, name) + " -o " + os.path.join(args.output, "out"))
             # print status
-            os.system("unzip " + os.path.join(args.apk_location, name) + " -d out")
+            os.system("unzip -q -o " + os.path.join(args.apk_location, name) + " -d out")
             os.system("./cppng.sh " + args.output_icon)
 
     return
